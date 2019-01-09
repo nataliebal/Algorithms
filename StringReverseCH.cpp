@@ -4,6 +4,7 @@
 
 #include "StringReverseCH.h"
 #include "StringReverser.h"
+#include "MyString.h"
 #include <iostream>
 #include <sys/types.h>
 #include <algorithm>
@@ -18,7 +19,6 @@
 #include <netinet/in.h>
 
 
-
 #define END "end"
 pthread_mutex_t lock;
 
@@ -31,20 +31,29 @@ void StringReverseCH::handleClient(int new_socket) {
     //reads from client as long as input is not stop
     while (str != END) {
         //pthread_mutex_lock(&lock);
-       bzero(buffer, sizeof(str));
+        bzero(buffer, sizeof(str));
         erez = read(new_socket, buffer, 5000);
         if (erez < 0) {
             perror("cannot read from client");
         }
-        string retStReverse = this->solver->solve(buffer);
+        string buff = buffer;
+        string retStReverse = solveProblem(buff);
         const char *ret = retStReverse.c_str();
         send(new_socket, ret, retStReverse.size(), 0);
-         str=buffer;
+        str = buffer;
         //pthread_mutex_unlock(&lock);
     }
 }
 
-StringReverseCH::StringReverseCH() {
+StringReverseCH::StringReverseCH(CacheManager<Stringable, Stringable> *cacheManger) {
+    this->cacheManager = cacheManger;
     this->solver = new StringReverser();
+}
+
+string StringReverseCH::solveProblem(string &problem) {
+    MyString str(problem);
+    if (this->cacheManager->isProblemExist(&str))
+        return this->cacheManager->search(&str)->toString();
+    return this->solver->solve(problem);
 }
 

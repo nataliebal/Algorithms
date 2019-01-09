@@ -8,9 +8,9 @@
 #define END_OF_PROBLEM "$"
 #define END_OF_SOLUTION "@"
 
-void FileCacheManager::save(Stringable problem, Stringable solution) {
-    string str_problem = problem.toString();
-    string str_solution = solution.toString();
+void FileCacheManager::save(Stringable *problem, Stringable *solution) {
+    string str_problem = problem->toString();
+    string str_solution = solution->toString();
     //if problem exists
     if (this->myData.count(str_problem)) {
         this->myData.at(str_problem) = str_solution;
@@ -18,21 +18,22 @@ void FileCacheManager::save(Stringable problem, Stringable solution) {
         this->myData.insert(pair<string, string>(str_problem, str_solution));
 }
 
-bool FileCacheManager::isProblemExist(Stringable problem) {
-    string str_problem = problem.toString();
+bool FileCacheManager::isProblemExist(Stringable *problem) {
+    string str_problem = problem->toString();
     return this->myData.count(str_problem) != 0;
 }
 
-Stringable FileCacheManager::search(Stringable problem) {
+Stringable *FileCacheManager::search(Stringable *problem) {
 
     if (isProblemExist(problem)) {
-        return MyString(this->myData.at(problem.toString()));
+        
+        return new MyString(this->myData.at(problem->toString()));
     }
 }
 
 void FileCacheManager::loadToMap() {
     this->file = fstream();
-    this->file.open("blut.txt", ios::in);
+    this->file.open("blut.txt", ios::in|ios::out);
     if (!this->file) perror("cannot open file!");
     string line;
     bool isProblem = true;

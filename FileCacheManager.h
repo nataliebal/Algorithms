@@ -16,11 +16,11 @@ class FileCacheManager: public CacheManager<Stringable,Stringable>{
     fstream file;
 public:
     FileCacheManager();
-    void save(Stringable problem,Stringable solution) override;
+    void save(Stringable* problem,Stringable* solution) override;
 
-    bool isProblemExist(Stringable problem) override;
+    bool isProblemExist(Stringable* problem) override;
 
-    Stringable search(Stringable problem) override;
+    Stringable* search(Stringable* problem) override;
 
     void loadToMap();
     void saveMap();

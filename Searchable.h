@@ -4,11 +4,31 @@
 
 #ifndef UNTITLED9_SEARCHABLE_H
 #define UNTITLED9_SEARCHABLE_H
+
+#include "State.h"
+#include <vector>
+
+using namespace std;
+
 template<class Node>
-class Searchable{
+class Searchable {
+protected:
+    State<Node> *innitialState;
+    State<Node> *goalState;
+    vector<vector<State<Node> *>> searchable;
+
 public:
-    virtual bool isEqual(Node first,Node second)=0;
-    virtual Node getAdjsNode(Node node)=0;
-    virtual Node getStartNode()=0;
+    Searchable(State<Node> *innitialState, State<Node> *goalState, vector<vector<State<Node>*> > searchable) {
+        this->innitialState = innitialState;
+        this->goalState = goalState;
+        this->searchable = searchable;
+    }
+
+    virtual State<Node> *getInitialState() = 0;
+
+    virtual State<Node> *getGoalState() = 0;
+
+    virtual vector<State<Node>> getAllPossibleStates(State<Node> s) = 0;
 };
+
 #endif //UNTITLED9_SEARCHABLE_H
