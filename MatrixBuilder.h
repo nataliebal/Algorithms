@@ -6,9 +6,10 @@
 #define UNTITLED9_MAXTRIXBUILDER_H
 
 #include "SearchableMatrix.h"
+#include "Point.h"
 
 class MatrixBuilder{
 public:
-    SearchableMatrix& create(vector<vector<double > >&matrix,Point initial,Point goal);
+    SearchableMatrix* create(vector<vector<double > >*matrix,Point* initial,Point* goal);
 };
 #endif //UNTITLED9_MAXTRIXBUILDER_H

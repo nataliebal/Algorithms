@@ -4,22 +4,30 @@
 
 #ifndef UNTITLED9_STATE_H
 #define UNTITLED9_STATE_H
-template <class T>
+
+template<class T>
 class State {
     // the state represented by a string
-    T* state;
+    T *state;
     // cost to reach this state (set by a setter)
     double cost;
     // the state we came from to this state (setter)
     State<T> *cameFrom;
     double sumOfVertex;
 public:
-    State (T* stet, double cost){
+    State(T *stet, double cost) {
         this->state = stet;
         this->cost = cost;
         this->cameFrom = nullptr;
-        this->sumOfVertex =0;
+        this->sumOfVertex = 0;
     }
+
+//    State(State<T> &s) {
+//        this->state = s.getState();
+//        this->cost = s.getCost();
+//        this->sumOfVertex = s.getSumOfVertex();
+//        this->cameFrom = new State(s.getCameFrom());
+//    }
 
     T *getState() const {
         return state;
@@ -54,9 +62,10 @@ public:
     }
 
     // we overload Object's Equals method
-    bool ifIsEquals(State <T>* s) {
-        return (this->state == s->state);
+    bool ifIsEquals(State<T> *s) {
+        return (*this->state == *s->state);
     }
 
 };
+
 #endif //UNTITLED9_STATE_H

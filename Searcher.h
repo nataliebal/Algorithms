@@ -4,9 +4,20 @@
 
 #ifndef UNTITLED9_SEARCHER_H
 #define UNTITLED9_SEARCHER_H
-template <class Problem,class Solution>
+#include <string>
+#include "Searchable.h"
+#include "Stringable.h"
+using namespace std;
+
+template <class T>
 class Searcher{
-//search return way for solution and gets grafh as problem
+public:
+    // the search method
+
+    virtual Stringable* search (Searchable<T>* searchable) = 0;
+
+    virtual // get how many nodes were evaluated by the algorithm
+    int getNumberOfNodesEvaluated()=0;
 
 };
 #endif //UNTITLED9_SEARCHER_H

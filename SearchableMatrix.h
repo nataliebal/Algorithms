@@ -7,24 +7,36 @@
 
 #include "Searchable.h"
 #include "Matrix.h"
-using Point =std::pair<int, int>;
-class SearchableMatrix: public Searchable<Point>{
-    Matrix<State<Point>>* matrix;
+#include "Stringable.h"
+#include "Point.h"
+
+//using Point =std::pair<int, int>;
+class SearchableMatrix : public Searchable<Point>, Stringable {
+    Matrix<Point> *matrix;
+    unsigned long rows;
+    unsigned long columns;
 public:
     SearchableMatrix(State<Point> *innitialState, State<Point> *goalState,
-                     vector<vector<State<Point> *>> searchable) ;
+                     vector<vector<State<Point> *>> *searchable);
+
+    SearchableMatrix(SearchableMatrix &sm);
 
     State<Point> *getInitialState() override;
 
     State<Point> *getGoalState() override;
 
-    virtual vector<State<Point >> getAllPossibleStates(State<Point> s) ;
+private:
+    string &toString() override;
 
-    Matrix<State<Point>> *getMatrix() const;
+public:
+    virtual vector<State<Point >*> &getAllPossibleStates(State<Point> s);
 
-    void setMatrix(Matrix<State<Point>> *matrix);
+    Matrix<Point> *getMatrix() const;
+
+    void setMatrix(Matrix<Point> *matrix);
 
 
 };
+
 #endif //UNTITLED9_SEARCHABLEMATRIX_H
 

@@ -41,6 +41,7 @@ void FileCacheManager::loadToMap() {
     string solution;
     while (getline(this->file, line)) {
         if (line == END_OF_SOLUTION) {
+            problem=problem.substr(0,problem.size()-1);
             this->myData.insert(pair<string, string>(problem, solution));
             isProblem = true;
             problem = "";
@@ -51,8 +52,8 @@ void FileCacheManager::loadToMap() {
             isProblem = false;
             continue;
         }
-        if (isProblem) problem += line;
-        else solution += line;
+        if (isProblem) problem += line+='\n';
+        else solution += line+='\n';
     }
 }
 

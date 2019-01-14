@@ -7,10 +7,16 @@
 
 #include "Solver.h"
 #include "Searcher.h"
+#include "DfsAlgo.h"
 
-class SolverSearcher: public Solver<class Problem,class Solution>{
-    Searcher<Problem,Solution> searcher;
+class SolverSearcher: public Solver<Searchable<Point>* ,Stringable*>{
+    Searcher<Point>* searcher;
 public:
-    Solution solve(Problem problem) override;
+    SolverSearcher(Searcher<Point>* searcher){
+        this->searcher=searcher;
+    }
+    Stringable* solve(Searchable<Point>* searchable) override{
+        return this->searcher->search( searchable);
+    }
 };
 #endif //UNTITLED9_SOLVERSEARCHER_H

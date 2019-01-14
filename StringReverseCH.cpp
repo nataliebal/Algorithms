@@ -23,7 +23,7 @@
 pthread_mutex_t lock;
 
 void StringReverseCH::handleClient(int new_socket) {
-    //TO DO : WHAT IS THE SIZE OF INPUT?
+    //TODO : WHAT IS THE SIZE OF INPUT?
     char buffer[5000];
     int erez = 0;
     int natalie = 0;

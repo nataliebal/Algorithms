@@ -11,7 +11,7 @@ using namespace std;
 
 class Stringable {
 public:
-    virtual string toString()=0;
+    virtual string& toString()=0;
 };
 
 #endif //UNTITLED9_TOSTRING_H

@@ -4,7 +4,7 @@
 
 #include "MyString.h"
 
-string MyString::toString() {
+string& MyString::toString() {
     return this->myString;
 }
 

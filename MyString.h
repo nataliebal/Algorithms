@@ -11,6 +11,6 @@ class MyString: public Stringable{
     string myString;
 public:
     MyString(string myString);
-    string toString() override;
+    string &toString() override;
 };
 #endif //UNTITLED9_STRING_H

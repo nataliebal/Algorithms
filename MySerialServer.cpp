@@ -25,10 +25,10 @@ struct thread_data {
     int new_sock;
     int socket;
     struct sockaddr_in address;
-    ClientHandler* ch;
+    ClientHandler *ch;
 };
 
-void MySerialServer::open(int port, ClientHandler* clientHandler) {
+void MySerialServer::open(int port, ClientHandler *clientHandler) {
     this->port = port;
     this->clientHandler = clientHandler;
     pthread_t thread;
@@ -45,7 +45,7 @@ void MySerialServer::open(int port, ClientHandler* clientHandler) {
     my_thread_data->new_sock = new_socket;
     my_thread_data->socket = server_fd;
     my_thread_data->address = address;
-    my_thread_data->ch=this->clientHandler;
+    my_thread_data->ch = this->clientHandler;
     rc = pthread_create(&thread, nullptr, start, my_thread_data);
     if (rc) {
         cout << "Error! unable to create thread";
@@ -70,10 +70,21 @@ void *MySerialServer::start(void *myParams) {
     while (true) {
         listen(sock, 5);
 
-        if ((new_socket = accept(sock, (struct sockaddr *) &address,
-                                 (socklen_t *) &addrlen)) < 0) {
-            perror("accept");
-            exit(EXIT_FAILURE);
+        timeval timeout;
+        timeout.tv_sec = 10;
+        timeout.tv_usec = 0;
+
+        setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
+        (new_socket = accept(sock, (struct sockaddr *) &address,
+                             (socklen_t *) &addrlen));
+        if (new_socket < 0) {
+            if (errno == EWOULDBLOCK) {
+                cout << "timeout!" << endl;
+                exit(2);
+            } else {
+                perror("accept");
+                exit(EXIT_FAILURE);
+            }
         }
         my_data->ch->handleClient(new_socket);
     }
