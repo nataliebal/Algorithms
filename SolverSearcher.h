@@ -7,11 +7,19 @@
 
 #include "Solver.h"
 #include "Searcher.h"
-#include "DfsAlgo.h"
+#include "Dfs.h"
 
 class SolverSearcher: public Solver<Searchable<Point>* ,Stringable*>{
     Searcher<Point>* searcher;
 public:
+    Searcher<Point> *getSearcher() const {
+        return searcher;
+    }
+
+    void setSearcher(Searcher<Point> *searcher) {
+        SolverSearcher::searcher = searcher;
+    }
+
     SolverSearcher(Searcher<Point>* searcher){
         this->searcher=searcher;
     }

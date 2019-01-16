@@ -11,7 +11,7 @@
 #include "Stringable.h"
 #include "CacheManager.h"
 #include "Searchable.h"
-#include "DfsAlgo.h"
+#include "Dfs.h"
 #include "Point.h"
 
 using namespace std;

@@ -20,10 +20,10 @@
 
 
 #define END "end"
-pthread_mutex_t lock;
+
 
 void StringReverseCH::handleClient(int new_socket) {
-    //TODO : WHAT IS THE SIZE OF INPUT?
+
     char buffer[5000];
     int erez = 0;
     int natalie = 0;
@@ -41,7 +41,7 @@ void StringReverseCH::handleClient(int new_socket) {
         const char *ret = retStReverse.c_str();
         send(new_socket, ret, retStReverse.size(), 0);
         str = buffer;
-        //pthread_mutex_unlock(&lock);
+
     }
 }
 

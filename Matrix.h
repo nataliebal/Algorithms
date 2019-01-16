@@ -10,7 +10,7 @@
 #include "Point.h"
 
 using namespace std;
-//using Point =std::pair<int, int>;
+
 
 template<class T>
 class Matrix {

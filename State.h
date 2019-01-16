@@ -14,6 +14,7 @@ class State {
     // the state we came from to this state (setter)
     State<T> *cameFrom;
     double sumOfVertex;
+    double fHeuristics;
 public:
     State(T *stet, double cost) {
         this->state = stet;
@@ -50,7 +51,7 @@ public:
     }
 
     void setCameFrom(State<T> *cameFrom) {
-        State::cameFrom = cameFrom;
+        this->cameFrom = cameFrom;
     }
 
     double getSumOfVertex() const {
@@ -66,6 +67,17 @@ public:
         return (*this->state == *s->state);
     }
 
+    void setFHeuristics(double f) {
+        this->fHeuristics = f;
+    }
+
+    double getFHeuristics() {
+        return fHeuristics;
+    }
+
+    ~State() {
+
+    }
 };
 
 #endif //UNTITLED9_STATE_H

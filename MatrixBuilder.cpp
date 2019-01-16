@@ -5,15 +5,15 @@
 #include "MatrixBuilder.h"
 
 
-SearchableMatrix *MatrixBuilder::create(vector<vector<double> > *matrix, Point* initial, Point* goal) {
+SearchableMatrix *MatrixBuilder::create(vector<vector<double> > *matrix, Point *initial, Point *goal) {
     int j = 0;
-    int i=0;
-    vector<vector<double> >* initial_matrix = matrix;
+    int i = 0;
+    vector<vector<double> > *initial_matrix = matrix;
     double goal_cost = initial_matrix->at(goal->getI()).at(goal->getJ());
-    State<Point> *goalState = new State<Point>(goal, goal_cost);;
+    //State<Point> *goalState = new State<Point>(goal, goal_cost);
     double init_cost = initial_matrix->at(initial->getI()).at(initial->getJ());
-    State<Point> *innitialState = new State<Point>(initial, init_cost);
-    vector<vector<State<Point> *>> *searchable=new vector<vector<State<Point> *>>();
+
+    vector<vector<State<Point> *>> *searchable = new vector<vector<State<Point> *>>();
     vector<State<Point> *> temp;
     State<Point> *s;
     Point *p;
@@ -30,7 +30,8 @@ SearchableMatrix *MatrixBuilder::create(vector<vector<double> > *matrix, Point* 
         j = 0;
         i++;
     }
-    //TODO DELETE MEMORY
+    State<Point> *innitialState = searchable->at(initial->getI()).at(initial->getJ());
+    State<Point> *goalState = searchable->at(goal->getI()).at(goal->getJ());
     SearchableMatrix *searchableMatrix = new SearchableMatrix(innitialState, goalState, searchable);
     return searchableMatrix;
 }

@@ -9,5 +9,5 @@ add_executable(untitled9 main.cpp Server.h ClientHandler.h MyClientHandler.cpp M
         MyParallelServer.h CacheManager.h FileCacheManager.cpp FileCacheManager.h Solver.h StringReverser.cpp
         StringReverser.h Searchable.h Searcher.h SolverSearcher.h
         Stringable.h MyString.cpp MyString.h Matrix.h State.h SearchableMatrix.cpp
-        SearchableMatrix.h MatrixBuilder.cpp MatrixBuilder.h DfsAlgo.cpp DfsAlgo.h Solution.cpp Solution.h
-        Point.h Bfs.h BestFirstSearch.h)
+        SearchableMatrix.h MatrixBuilder.cpp MatrixBuilder.h Dfs.cpp Dfs.h Solution.cpp Solution.h
+        Point.h Bfs.h BestFirstSearch.h Main.cpp Main.h A_Star.h)

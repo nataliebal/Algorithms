@@ -7,8 +7,10 @@
 
 #define END_OF_PROBLEM "$"
 #define END_OF_SOLUTION "@"
+pthread_mutex_t lock;
 
 void FileCacheManager::save(Stringable *problem, Stringable *solution) {
+    pthread_mutex_lock(&lock);
     string str_problem = problem->toString();
     string str_solution = solution->toString();
     //if problem exists
@@ -16,6 +18,7 @@ void FileCacheManager::save(Stringable *problem, Stringable *solution) {
         this->myData.at(str_problem) = str_solution;
     } else
         this->myData.insert(pair<string, string>(str_problem, str_solution));
+    pthread_mutex_unlock(&lock);
 }
 
 bool FileCacheManager::isProblemExist(Stringable *problem) {
@@ -26,22 +29,22 @@ bool FileCacheManager::isProblemExist(Stringable *problem) {
 Stringable *FileCacheManager::search(Stringable *problem) {
 
     if (isProblemExist(problem)) {
-        
+
         return new MyString(this->myData.at(problem->toString()));
     }
 }
 
 void FileCacheManager::loadToMap() {
-    this->file = fstream();
-    this->file.open("blut.txt", ios::in|ios::out);
-    if (!this->file) perror("cannot open file!");
+    fstream stream;
+    stream.open(this->file, ios::in);
+    if (!stream) perror("cannot open file!");
     string line;
     bool isProblem = true;
     string problem;
     string solution;
-    while (getline(this->file, line)) {
+    while (getline(stream, line)) {
         if (line == END_OF_SOLUTION) {
-            problem=problem.substr(0,problem.size()-1);
+            problem = problem.substr(0, problem.size() - 1);
             this->myData.insert(pair<string, string>(problem, solution));
             isProblem = true;
             problem = "";
@@ -52,25 +55,39 @@ void FileCacheManager::loadToMap() {
             isProblem = false;
             continue;
         }
-        if (isProblem) problem += line+='\n';
-        else solution += line+='\n';
+        if (isProblem) problem += line += '\n';
+        else solution += line += '\n';
     }
+    stream.close();
 }
 
 FileCacheManager::FileCacheManager() {
+    this->file = "blut.txt";
     loadToMap();
 }
 
 void FileCacheManager::saveMap() {
-    this->file.open("blut.txt", ios::app);
+    fstream stream;
+    stream.open(this->file, ios::out);
+    int counter = 0;
+    cout << this->myData.size() << endl;
     for (pair<string, string> pr_sl:this->myData) {
-        saveObjectInFile(pr_sl.first, pr_sl.second);
+        saveObjectInFile(pr_sl.first, pr_sl.second, &stream);
+        cout << counter << endl;
+        counter++;
     }
+    stream.close();
 }
 
-void FileCacheManager::saveObjectInFile(string problem, string solution) {
-    this->file << problem << endl;
-    this->file << END_OF_PROBLEM << endl;
-    this->file << solution << endl;
-    this->file << END_OF_SOLUTION << endl;
+void FileCacheManager::saveObjectInFile(string problem, string solution, fstream *stream) {
+    *stream << problem << endl;
+    *stream << END_OF_PROBLEM << endl;
+    *stream << solution << endl;
+    *stream << END_OF_SOLUTION << endl;
+    cout << problem << endl;
+    cout << solution << endl;
+}
+
+FileCacheManager::~FileCacheManager() {
+    this->saveMap();
 }

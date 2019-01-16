@@ -10,7 +10,7 @@
 #include "Stringable.h"
 #include "Point.h"
 
-//using Point =std::pair<int, int>;
+
 class SearchableMatrix : public Searchable<Point>, Stringable {
     Matrix<Point> *matrix;
     unsigned long rows;
@@ -29,13 +29,21 @@ private:
     string &toString() override;
 
 public:
-    virtual vector<State<Point >*> &getAllPossibleStates(State<Point> s);
+    virtual vector<State<Point> *> &getAllPossibleStates(State<Point> s);
 
     Matrix<Point> *getMatrix() const;
 
     void setMatrix(Matrix<Point> *matrix);
 
+    unsigned long getRows() const;
 
+    void setRows(unsigned long rows);
+
+    unsigned long getColumns() const;
+
+    void setColumns(unsigned long columns);
+
+    ~SearchableMatrix();
 };
 
 #endif //UNTITLED9_SEARCHABLEMATRIX_H
